@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  web1:
+    restart: always
+    build: ./web1
+    networks:
+      maxnet:
+        ipv4_address: 172.20.0.3
+    expose:
+      - "8000"
+    env_file: .env
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
+  web2:
+    restart: always
+    build: ./web2
+    networks:
+      maxnet:
+        ipv4_address: 172.20.0.4
+    expose:
+      - "8000"
+    env_file: .env
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
+#  web3:
+#    restart: always
+#    build: ./web3
+#    networks:
+#      maxnet:
+#        ipv4_address: 172.20.0.5
+#    expose:
+#      - "8000"
+#    env_file: .env
+#    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
+  nginx:
+    restart: always
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile-ip
+    networks:
+      maxnet:
+        ipv4_address: 172.20.0.2
+    ports:
+      - "80:80"
+
+networks:
+  maxnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+#          gateway: 172.28.0.1

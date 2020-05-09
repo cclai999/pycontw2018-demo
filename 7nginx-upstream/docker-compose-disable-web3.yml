@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  web1:
+    restart: always
+    build: ./web1
+    networks:
+      - maxnet
+    expose:
+      - "8000"
+    env_file: .env
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
+  web2:
+    restart: always
+    build: ./web2
+    networks:
+      - maxnet
+    expose:
+      - "8000"
+    env_file: .env
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
+  web3:
+    restart: always
+    build: ./web3
+    networks:
+      - maxnet
+    expose:
+      - "8000"
+    env_file: .env
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    networks:
+      - maxnet
+    ports:
+      - "80:80"
+
+networks:
+  maxnet:

@@ -1,0 +1,5 @@
+FROM nginx:1.13.12
+RUN rm /etc/nginx/nginx.conf
+COPY nginx-ip.conf /etc/nginx/nginx.conf
+RUN rm /etc/nginx/conf.d/default.conf
+COPY demo_web.conf /etc/nginx/conf.d/
