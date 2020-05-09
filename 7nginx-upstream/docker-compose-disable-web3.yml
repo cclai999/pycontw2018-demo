@@ -21,15 +21,15 @@ services:
     env_file: .env
     command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
 
-  web3:
-    restart: always
-    build: ./web3
-    networks:
-      - maxnet
-    expose:
-      - "8000"
-    env_file: .env
-    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+#  web3:
+#    restart: always
+#    build: ./web3
+#    networks:
+#      - maxnet
+#    expose:
+#      - "8000"
+#    env_file: .env
+#    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
 
   nginx:
     restart: always
